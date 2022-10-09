@@ -65,4 +65,10 @@
 
 默认实现了 [Markdown](https://github.com/sduo/Hestia.Logging.DingTalk/blob/master/src/Formatters/MarkdownFormatter.cs) 消息，如果有特殊需要，参考 [钉钉官方文档](https://open.dingtalk.com/document/robots/custom-robot-access) 中的 ```消息类型及数据格式```，实现 [IFormatter](https://github.com/sduo/Hestia.Logging.DingTalk/blob/master/src/Formatters/IFormatter.cs) 接口即可。
 
-* 示例：[Hestia.Logging.DingTalk.Samples](https://github.com/sduo/Hestia.Logging.DingTalk.Samples)
+# 依赖说明
+
+* [Hestia.Logging.Abstractions](https://github.com/sduo/Hestia.Logging.Abstractions)：参考 [Logging.AzureAppServices](https://github.com/dotnet/aspnetcore/tree/main/src/Logging.AzureAppServices) 实现的日志提供程序。
+* [Hestia.Security](https://github.com/sduo/Hestia.Security)：钉钉消息的 ```HMAC-SHA256``` 签名计算。
+
+# 使用示例
+* [Hestia.Logging.DingTalk.Samples](https://github.com/sduo/Hestia.Logging.DingTalk.Samples)
