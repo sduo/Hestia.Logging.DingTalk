@@ -41,6 +41,7 @@
     "DingTalk": {
       "Markdown":{
         "Stack": false,
+        "Id": "[查看详细]({0})",
         "Image":{
           "Information":"![Information]({information.png})",
           "Warning":"![Warning]({warning.png})",
@@ -58,6 +59,7 @@
 ```
 
 * Stack：是否包含异常堆栈（布尔值，默认：是）
+* Id：日志标识号的格式化文本，如上例所示：可以通过日志标识号在其他的日志存储中快速定位当前日志。
 * Image：用指定的 Markdown 替换钉钉消息中首行的日志等级，如上例所示：用指定的图片替换对应的日志等级，来提高辨识度。
 * Icon：用指定的字符替换钉钉聊天列表中新消息标题中的日志等级，如上例所示：用指定的 UTF8 图标来替换对应的日志等级，来提高辨识度。
 

@@ -25,13 +25,13 @@ namespace Hestia.Logging.DingTalk.Formatters
             var messages = new List<string>(){
                 configuration.GetValue($"Image:{log.Level}", $"# {log.Level}"),
                 Separator,
-                $"机器：{Environment.MachineName}",
-                $"路径：{Environment.ProcessPath}",
-                $"进程：{Environment.ProcessId}",                
-                $"模块：{log.Category}"                
+                $"* 机器：{Environment.MachineName}",
+                $"* 路径：{Environment.ProcessPath}",
+                $"* 进程：{Environment.ProcessId}",                
+                $"* 模块：{log.Category}"                
             };
 
-            StringBuilder @event = new StringBuilder($"事件：{log.Event.Id}");
+            var @event = new StringBuilder($"* 事件：{log.Event.Id}");
             if (!string.IsNullOrEmpty(log.Event.Name))
             {
                 @event.Append($"({log.Event.Name})");
@@ -41,7 +41,7 @@ namespace Hestia.Logging.DingTalk.Formatters
             if (log.Scopes.Count > 0)
             {
                 messages.Add(Separator);
-                messages.AddRange(log.Scopes.Select(x => x.ToString()));
+                messages.AddRange(log.Scopes.Select(x => $"* {x}"));
             }
             messages.Add(Separator);
             messages.Add(log.Message);
@@ -60,6 +60,8 @@ namespace Hestia.Logging.DingTalk.Formatters
                 }
             }
 
+            messages.Add(Separator);            
+            messages.Add(string.Format(configuration.GetValue("Id", "{0}"), log.Id));
 
             return JsonContent.Create(new
             {

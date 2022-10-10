@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hestia.Logging.Abstractions" Version="1.0.0" />
+    <PackageReference Include="Hestia.Logging.Abstractions" Version="1.0.1" />
     <PackageReference Include="Hestia.Security" Version="1.1.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
