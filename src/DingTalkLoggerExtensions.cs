@@ -10,10 +10,10 @@ namespace Hestia.Logging.DingTalk
 {
     public static class DingTalkLoggerExtensions
     {
-        public static ILoggingBuilder AddDingTalk(this ILoggingBuilder builder,Func<IConfiguration, IFormatter> fromatter = null)
+        public static ILoggingBuilder AddDingTalk(this ILoggingBuilder builder,Func<IConfiguration, IFormatter> formatter = null)
         {
             builder.AddConfiguration();
-            builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, DingTalkLoggerProvider>((services)=> new DingTalkLoggerProvider(services,fromatter)));
+            builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, DingTalkLoggerProvider>((services)=> new DingTalkLoggerProvider(services,formatter)));
             return builder;
         }
     }
