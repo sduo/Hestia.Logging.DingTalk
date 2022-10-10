@@ -11,19 +11,25 @@ namespace Hestia.Logging.DingTalk.Formatters
 {
     public sealed class MarkdownFormatter : IFormatter
     {
-        private readonly IConfiguration configuration;
-
         public const string Separator = "----";
+        public const string NewLine = "\n\n";
 
-        public MarkdownFormatter(IConfiguration configuration)
+        public IConfiguration Configuration { get; init ; }
+
+        public string Name => "Markdown";
+
+        private readonly Action<List<string>> with;
+
+        public MarkdownFormatter(IConfiguration configuration,Action<List<string>> with = null)
         {
-            this.configuration = configuration.GetSection("Markdown");
+            Configuration = configuration.GetSection(Name);
+            this.with = with;
         }
 
         public HttpContent Format(Log log)
         {
             var messages = new List<string>(){
-                configuration.GetValue($"Image:{log.Level}", $"# {log.Level}"),
+                Configuration.GetValue($"Image:{log.Level}", $"# {log.Level}"),
                 Separator,
                 $"* 机器：{Environment.MachineName}",
                 $"* 路径：{Environment.ProcessPath}",
@@ -54,22 +60,24 @@ namespace Hestia.Logging.DingTalk.Formatters
                 {
                     messages.Add($"*{log.Exception.GetBaseException().Message}*");
                 }                
-                if (configuration.GetValue($"Stack", true) && !string.IsNullOrEmpty(log.Exception.StackTrace))
+                if (Configuration.GetValue($"Stack", true) && !string.IsNullOrEmpty(log.Exception.StackTrace))
                 {
                     messages.Add($"> {log.Exception.StackTrace}");
                 }
             }
 
             messages.Add(Separator);            
-            messages.Add(string.Format(configuration.GetValue("Id", "{0}"), log.Id));
+            messages.Add(string.Format(Configuration.GetValue("Id", "{0}"), log.Id));
+
+            with?.Invoke(messages);
 
             return JsonContent.Create(new
             {
                 msgtype = "markdown",
                 markdown = new
                 {
-                    title = string.Concat(configuration.GetValue($"Icon:{log.Level}",$"[{log.Level}]"),log.Category),
-                    text = string.Join("\n\n", messages)
+                    title = string.Concat(Configuration.GetValue($"Icon:{log.Level}",$"[{log.Level}]"),log.Category),
+                    text = string.Join(NewLine, messages)
                 }
             });
         }
